@@ -33,17 +33,19 @@ StandardStringManipulator (SSM) は、Minecraftのデータパックにおいて
 
 | 関数パス | 入力 | 出力 | 概要 |
 | :--- | :--- | :--- | :--- |
-| `ssm:dangerous/join/main` | list | string | 入力リスト内の文字列を結合します。 |
-| `ssm:dangerous/join/split` | string | list | 文字列を一文字ずつに分解し、リストとして返します。 |
-| `ssm:dangerous/join/to_safe` | dangerous | safe | 文字列を `safe string` に変換（エンコード）します。 |
+| `ssm:dangerous/join/main` | dangerous[] | dangerous | 入力リスト内の文字列を結合します。 |
+| `ssm:dangerous/split/main` | dangerous | dangerous[] | 文字列を一文字ずつに分解し、リストとして返します。 |
+| `ssm:dangerous/to_safe/main` | dangerous | safe | 文字列を `safe string` に変換（エンコード）します。 |
+| `ssm:dangerous/quote/main` | dangerous | dangerous | `"`を`\"`に、`\`を`\\`に変更の上、先頭と末尾に`"`を追加します |
 
 ### Safe String 操作 (`ssm:safe/`)
 
 | 関数パス | 入力 | 出力 | 概要 |
 | :--- | :--- | :--- | :--- |
-| `ssm:safe/join/main` | list | string | `safe string` のリストを結合します。 |
-| `ssm:safe/join/split` | safe | list | 一文字ずつ分解します。`%25` 等のエスケープ済み文字は1文字として扱われます。 |
-| `ssm:safe/join/to_dangerous` | safe | dangerous | `safe string` を `dangerous string` に復元（デコード）します。 |
+| `ssm:safe/join/main` | safe[] | safe | `safe string` のリストを結合します。 |
+| `ssm:safe/split/main` | safe | safe[] | 一文字ずつ分解します。`%25` 等のエスケープ済み文字は1文字として扱われます。 |
+| `ssm:safe/to_dangerous/main` | safe | dangerous | `safe string` を `dangerous string` に復元（デコード）します。 |
+| `ssm:safe/quote/main` | safe | safe | `%22`を`%5c%22`に、`%5c`を`%5c%5c`に変更の上、先頭と末尾に`%22`を追加します |
 
 ### ユーティリティ
 
@@ -69,3 +71,4 @@ function ssm:dangerous/join/main {id: 100}
 
 # 利用したデータの削除
 function ssm:remove_data {id: 100}
+```

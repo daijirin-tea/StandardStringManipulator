@@ -9,7 +9,7 @@ $data modify storage ssm: $(id).output set value []
 $execute store result storage ssm: $(id).start_index int 1 run scoreboard players set $$(id) ssm_start_index 0
 $execute store result storage ssm: $(id).end_index int 1 run scoreboard players set $$(id) ssm_end_index 1
 
-$function ssm:dangerous/to_safe/each with storage ssm: $(id)
+$function ssm:dangerous/split/each with storage ssm: $(id)
 
 $scoreboard players reset $$(id) ssm_start_index
 $scoreboard players reset $$(id) ssm_end_index
