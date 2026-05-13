@@ -1,0 +1,7 @@
+{
+    "pack": {
+        "description": "標準的な文字列操作を実現します",
+        "min_format": [101,1],
+        "max_format": [101,1]
+    }
+}

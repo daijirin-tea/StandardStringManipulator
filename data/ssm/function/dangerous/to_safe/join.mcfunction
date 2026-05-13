@@ -1,0 +1,1 @@
+$data modify storage ssm: $(id).output set value "$(output)$(letter_to_join)"

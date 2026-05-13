@@ -1,0 +1,2 @@
+$execute store success score $$(id) ssm_success run data get storage ssm: $(id).list_a[$(ideal_length)]
+$execute if score $$(id) ssm_success matches 1 run function ssm:safe/to_dangerous/double_ideal_length {id:$(id)}

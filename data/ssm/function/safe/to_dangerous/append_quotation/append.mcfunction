@@ -1,0 +1,1 @@
+$data modify storage ssm: $(id).list_a append value "$(back_slash)""

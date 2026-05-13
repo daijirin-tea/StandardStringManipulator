@@ -1,0 +1,1 @@
+$data modify storage ssm: $(id).element set value "$(element)$(each_letter)"
