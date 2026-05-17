@@ -1,0 +1,6 @@
+dispatch minecraft:storage["ssm:"] to struct {
+    [string]: struct {
+        input: (string | [string]),
+        output: (string | [string])
+    }
+}
