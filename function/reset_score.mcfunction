@@ -1,0 +1,10 @@
+scoreboard players reset $ssm ssm_start_index
+scoreboard players reset $ssm ssm_end_index
+scoreboard players reset $ssm ssm_end_index2
+scoreboard players reset $ssm ssm_success
+scoreboard players reset $ssm ssm_success2
+scoreboard players reset $ssm ssm_length
+scoreboard players reset $ssm ssm_ideal_length
+scoreboard players reset $ssm ssm_count
+scoreboard players reset $ssm ssm_join_count
+scoreboard players reset $ssm ssm_join_count2
