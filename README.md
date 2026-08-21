@@ -17,10 +17,10 @@ NBTを用いた関数群の入出力
 
 ## インストール方法
 
-このデータパックは依存関係がないため、`git submodule`で取得します。
+リポジトリをクローンするだけで取得できます。
 
 ```bash
-git submodule add https://github.com/daijirin-tea/StandardStringManipulator.git StandardStringManipulator
+git clone https://github.com/daijirin-tea/StandardStringManipulator.git
 ```
 
 ## 使い方
