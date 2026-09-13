@@ -1,108 +1,62 @@
 # StandardStringManipulator
 
-NBT内の文字列の結合・引用符・分割をサポートするデータパックです。
+NBT文字列を結合・分割・引用・エスケープするデータパックです。MinecraftのコマンドやJSON文字列に安全に埋め込めるよう、文字列を2つの表現で扱います。
 
-## 基本概念
+## 文字列表現
 
-### [frame](https://github.com/daijirin-tea/my-mc-concepts/tree/main/concepts/frame)
+| 表現 | 内容 | 用途 |
+| --- | --- | --- |
+| safe | `"` → `%22`、`\\` → `%5c`、`%` → `%25` にエンコード済み | 内部処理・文字列の受け渡し |
+| dangerous | `"` と `\\` をそのまま含む | Minecraftの文字列として使う直前 |
 
-NBTを用いた関数群の入出力
+`safe` は文字そのものを復元するエスケープではなく、上記3文字を置換した独自表現です。safe APIには必ずsafeな値を、dangerous APIにはdangerousな値を渡してください。
 
-### safe / dangerous
+## 前提: フレーム
 
-このデータパックでは、文字列を以下の2つの状態で扱います。
+入出力は `storage ssm: frames[-1]` に格納します。呼び出し前にフレームを追加し、結果を利用したら呼び出し元で削除してください。フレームを積むことでAPI呼び出しをネストできます。
 
-- **safe**: `"` → `%22`, `\` → `%5c`, `%` → `%25` にエンコード済みの文字列
-- **dangerous**: `"` や `\` を含む通常の文字列
-
-## インストール方法
-
-リポジトリをクローンするだけで取得できます。
-
-```bash
-git clone https://github.com/daijirin-tea/StandardStringManipulator.git
-```
-
-## 使い方
-
-`storage ssm: frames[-1].input` に文字列を設定し、関数を実行します。
+## 最短の使用例
 
 ```mcfunction
-# 入力
-data modify storage ssm: frames[-1].input set value ["foo", "bar"]
-
-# 関数を実行
+# safeな文字列を結合する（出力: foobar）
+data modify storage ssm: w set value {input:["foo","bar"]}
+data modify storage ssm: frames append from storage ssm: w
 function ssm:safe/join/main
-
-# 出力
-# storage ssm: frames[-1].output = "foobar"
+tellraw @a {nbt:"frames[-1].output",storage:"ssm:"}
+data remove storage ssm: frames[-1]
 ```
 
 ## API
 
-### safe
+すべてのAPIの入力は `storage ssm: frames[-1].input`、出力は `storage ssm: frames[-1].output` です。
 
-#### `ssm:safe/join/main`
+### safe API
 
-safeな文字列を結合します。
+| 関数 | 入力 | 出力 | 説明 |
+| --- | --- | --- | --- |
+| `ssm:safe/join/main` | `string[]` | `string` | safeな文字列を結合する |
+| `ssm:safe/quote/main` | `string` | `string` | 値を二重引用符で囲み、内部の二重引用符をエスケープする |
+| `ssm:safe/split/main` | `string` | `string[]` | safeな文字列を1文字ずつに分割する |
+| `ssm:safe/to_dangerous/main` | `string` | `string` | safe表現をdangerous表現へ変換する |
 
-- `@input storage ssm: frames[-1].input: string[]` - (`"`→`%22`, `\`→`%5c`, `%`→`%25` にエンコード済み)
-- `@output storage ssm: frames[-1].output: string` - (`"`→`%22`, `\`→`%5c`, `%`→`%25` にエンコード済み)
+### dangerous API
 
-#### `ssm:safe/quote/main`
+| 関数 | 入力 | 出力 | 説明 |
+| --- | --- | --- | --- |
+| `ssm:dangerous/join/main` | `string[]` | `string` | dangerousな文字列を結合する |
+| `ssm:dangerous/quote/main` | `string` | `string` | 値を二重引用符で囲み、内部の二重引用符とバックスラッシュをエスケープする |
+| `ssm:dangerous/split/main` | `string` | `string[]` | dangerousな文字列を1文字ずつに分割する |
+| `ssm:dangerous/to_safe/main` | `string` | `string` | dangerous表現をsafe表現へ変換する |
 
-safeな文字列をダブルクォーテーションで囲い、中にあるダブルクォーテーションはエスケープして返します。
+## 注意事項
 
-- `@input storage ssm: frames[-1].input: string` - (`"`→`%22`, `\`→`%5c`, `%`→`%25` にエンコード済み)
-- `@output storage ssm: frames[-1].output: string` - (`"`→`%22`, `\`→`%5c`, `%`→`%25` にエンコード済み)
-
-#### `ssm:safe/split/main`
-
-safeな文字列を一文字ずつ分解します。
-
-- `@input storage ssm: frames[-1].input: string` - (`"`→`%22`, `\`→`%5c`, `%`→`%25` にエンコード済み)
-- `@output storage ssm: frames[-1].output: string[]` - (`"`→`%22`, `\`→`%5c`, `%`→`%25` にエンコード済み)
-
-#### `ssm:safe/to_dangerous/main`
-
-safeな文字列をdangerousに変換します。
-
-- `@input storage ssm: frames[-1].input: string` - (`"`→`%22`, `\`→`%5c`, `%`→`%25` にエンコード済み)
-- `@output storage ssm: frames[-1].output: string` - (`"`や`\`も含まれる)
-
-### dangerous
-
-#### `ssm:dangerous/join/main`
-
-dangerousな文字列を結合します。
-
-- `@input storage ssm: frames[-1].input: string[]` - (`"`や`\`も含まれる)
-- `@output storage ssm: frames[-1].output: string` - (`"`や`\`も含まれる)
-
-#### `ssm:dangerous/quote/main`
-
-dangerousな文字列をダブルクォーテーションで囲み、中にあるダブルクォーテーションはエスケープして返します。
-
-- `@input storage ssm: frames[-1].input: string` - (`"`や`\`も含まれる)
-- `@output storage ssm: frames[-1].output: string` - (`"`や`\`も含まれる)
-
-#### `ssm:dangerous/split/main`
-
-dangerousな文字列を一文字ずつ分解します。
-
-- `@input storage ssm: frames[-1].input: string` - (`"`や`\`も含まれる)
-- `@output storage ssm: frames[-1].output: string[]` - (`"`や`\`も含まれる)
-
-#### `ssm:dangerous/to_safe/main`
-
-dangerousな文字列をsafeに変換します。
-
-- `@input storage ssm: frames[-1].input: string` - (`"`や`\`も含まれる)
-- `@output storage ssm: frames[-1].output: string` - (`"`→`%22`, `\`→`%5c`, `%`→`%25` にエンコード済み)
+- `safe/quote` と `dangerous/quote` は、結果の先頭・末尾に二重引用符を追加します。
+- `%` を含むdangerousな文字列をsafeへ変換すると `%25` になります。safe値を二重に変換すると元の文字列には戻りません。
+- 公開APIは表に記載した `main` 関数です。その他の関数は内部実装です。
 
 ## 依存関係
 
-なし
+なし。
 
 ## ライセンス
 
