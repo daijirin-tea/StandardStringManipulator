@@ -1,0 +1,19 @@
+struct Frame {
+    input?: any,
+    output?: any,
+    data?: struct {
+        [string]: any
+    },
+    scores?: [struct {
+        objective: string,
+        value: int
+    }]
+}
+
+type StringParts = [(string | struct {type:("backslash" | "double_quotation")})]
+
+dispatch minecraft:storage["ssm:"] to struct {
+    w: Frame,
+    temporary: Frame,
+    frames: [Frame]
+}

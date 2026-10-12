@@ -9,3 +9,6 @@ scoreboard objectives add ssm_ideal_length dummy
 scoreboard objectives add ssm_count dummy
 scoreboard objectives add ssm_join_count dummy
 scoreboard objectives add ssm_join_count2 dummy
+scoreboard objectives add ssm_item_length dummy
+scoreboard objectives add ssm_index dummy
+scoreboard objectives add ssm_flag dummy

@@ -10,3 +10,6 @@ execute store result score $ssm ssm_ideal_length run data get storage ssm: w.sco
 execute store result score $ssm ssm_count run data get storage ssm: w.scores[{objectives:"ssm_count"}].value
 execute store result score $ssm ssm_join_count run data get storage ssm: w.scores[{objectives:"ssm_join_count"}].value
 execute store result score $ssm ssm_join_count2 run data get storage ssm: w.scores[{objectives:"ssm_join_count2"}].value
+execute store result score $ssm ssm_item_length run data get storage ssm: w.scores[{objectives:"ssm_item_length"}].value
+execute store result score $ssm ssm_index run data get storage ssm: w.scores[{objectives:"ssm_index"}].value
+execute store result score $ssm ssm_flag run data get storage ssm: w.scores[{objectives:"ssm_flag"}].value

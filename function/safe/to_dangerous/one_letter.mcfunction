@@ -1,1 +1,0 @@
-$data modify storage ssm: w.data.element set value "$(element)$(each_letter)"

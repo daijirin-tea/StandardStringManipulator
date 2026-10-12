@@ -1,0 +1,2 @@
+$data modify storage ssm: w.data.sliced_item set string storage ssm: w.data.item $(start_index) $(end_index)
+execute unless data storage ssm: w.data{sliced_item:""} run data modify storage ssm: w.data.output.result append from storage ssm: w.data.sliced_item
