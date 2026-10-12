@@ -8,6 +8,9 @@ execute store result storage ssm: w.scores[{objectives:"ssm_ideal_length"}].valu
 execute store result storage ssm: w.scores[{objectives:"ssm_count"}].value int 1 run scoreboard players get $ssm ssm_count
 execute store result storage ssm: w.scores[{objectives:"ssm_join_count"}].value int 1 run scoreboard players get $ssm ssm_join_count
 execute store result storage ssm: w.scores[{objectives:"ssm_join_count2"}].value int 1 run scoreboard players get $ssm ssm_join_count2
+execute store result storage ssm: w.scores[{objectives:"ssm_item_length"}].value int 1 run scoreboard players get $ssm ssm_item_length
+execute store result storage ssm: w.scores[{objectives:"ssm_index"}].value int 1 run scoreboard players get $ssm ssm_index
+execute store result storage ssm: w.scores[{objectives:"ssm_flag"}].value int 1 run scoreboard players get $ssm ssm_flag
 
 data remove storage ssm: frames[-1]
 data modify storage ssm: frames append from storage ssm: w

@@ -1,1 +1,0 @@
-$data modify storage ssm: w.data.output set value "$(output)$(letter_to_join)"

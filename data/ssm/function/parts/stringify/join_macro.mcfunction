@@ -1,0 +1,1 @@
+$data modify storage ssm: w.data.list_b append value "$(item_0)$(item_1)"

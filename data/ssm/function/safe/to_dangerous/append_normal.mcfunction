@@ -1,1 +1,0 @@
-data modify storage ssm: w.data.list_a append from storage ssm: w.data.item

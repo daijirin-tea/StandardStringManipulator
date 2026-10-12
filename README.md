@@ -1,4 +1,5 @@
 # StandardStringManipulator
+**Version: 2.0.0**
 
 NBT内の文字列の結合・引用符・分割をサポートするデータパックです。
 

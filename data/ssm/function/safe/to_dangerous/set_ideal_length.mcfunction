@@ -1,2 +1,0 @@
-$execute store success score $ssm ssm_success run data get storage ssm: w.data.list_a[$(ideal_length)]
-execute if score $ssm ssm_success matches 1 run function ssm:safe/to_dangerous/double_ideal_length
